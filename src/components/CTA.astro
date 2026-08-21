@@ -1,0 +1,21 @@
+---
+import { site } from '../config/site';
+---
+
+<section class="enquiry-cta" aria-label="Get in touch">
+  <div class="row">
+    <a class="btn btn-primary" href="/consultation">Book a consultation</a>
+    <a class="btn btn-secondary" href="/enquiry">Make an enquiry</a>
+  </div>
+  <p class="fine">Usually respond within {site.responseTimeBusinessDays} business days.</p>
+</section>
+
+<style>
+  .enquiry-cta { text-align: center; }
+  .row { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .fine { margin-top: 0.85rem; font-size: 0.82rem; color: var(--ink-soft); }
+
+  @media (max-width: 560px) {
+    .row { flex-direction: column; }
+  }
+</style>

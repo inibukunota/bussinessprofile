@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceHero from '../../components/services/ServiceHero.astro';
+import ProblemSection from '../../components/services/ProblemSection.astro';
+import ServiceFeatures from '../../components/services/ServiceFeatures.astro';
+import ProcessSection from '../../components/services/ProcessSection.astro';
+import WhyChooseUs from '../../components/services/WhyChooseUs.astro';
+import RelatedArticles from '../../components/services/RelatedArticles.astro';
+import FAQSection from '../../components/services/FAQSection.astro';
+import ServiceCTA from '../../components/services/ServiceCTA.astro';
+import { site, services } from '../../config/site';
+
+const service = services.protection;
+---
+
+<BaseLayout
+  title={service.label}
+  description="Practical financial protection solutions built around your circumstances, responsibilities and the people who depend on you."
+>
+  <div class="wrap">
+    <p class="breadcrumb"><a href="/">Home</a> / {service.label}</p>
+
+    <ServiceHero
+      eyebrow={service.label}
+      iconPath="M12 3l7 3v6c0 4.4-3 8-7 9-4-1-7-4.6-7-9V6z"
+      title="Protect what you've built, before life asks you to use it."
+      lede={`Financial protection should make sense for your actual life. ${site.name} helps individuals and families in Malaysia think through the risks, responsibilities and coverage choices that matter most.`}
+    />
+
+    <ProblemSection
+      heading="A policy is only useful when it fits the life behind it."
+      paragraphs={[
+        "It is easy to postpone financial protection when everything is going well. But without a clear plan, an illness, accident or loss of income can place pressure on savings, commitments and the people who rely on you.",
+        "The right starting point is not a product list. It is understanding what you need to protect, how much room you have, and which gaps would be hardest to recover from.",
+      ]}
+      points={[
+        { text: 'Coverage that no longer reflects your income or responsibilities' },
+        { text: 'Important exclusions or limits that were never clearly understood' },
+        { text: 'Families left to make urgent financial decisions without a plan' },
+      ]}
+    />
+
+    <ServiceFeatures
+      heading="Protection built around your priorities"
+      intro="Start with the areas that matter most, then shape a practical plan around your circumstances and budget."
+      offers={[
+        {
+          title: 'Needs review',
+          description: 'A clear look at your responsibilities, existing cover and the risks that could affect your plans.',
+          iconPath: 'M4 4h16v16H4zM8 8h8M8 12h8M8 16h5',
+        },
+        {
+          title: 'Coverage planning',
+          description: 'Considered guidance on protection for health, income, family responsibilities and major commitments.',
+          iconPath: 'M12 3l7 3v6c0 4.4-3 8-7 9-4-1-7-4.6-7-9V6z',
+        },
+        {
+          title: 'Review and update',
+          description: 'A regular check that keeps your protection aligned as work, family and financial commitments change.',
+          iconPath: 'M20 11a8.1 8.1 0 0 0-15.5-2M4 5v4h4M4 13a8.1 8.1 0 0 0 15.5 2M20 19v-4h-4',
+        },
+      ]}
+      whoForHeading="Who this is for"
+      whoFor={[
+        'Individuals building financial resilience around their income and commitments',
+        'Parents and families who want to protect the people who depend on them',
+        'Anyone who has existing policies but is unsure whether they still fit',
+      ]}
+    />
+
+    <ProcessSection
+      heading="A clear process, without the pressure"
+      steps={[
+        { title: 'Talk through your situation', description: 'Share your priorities, responsibilities and what you already have in place.' },
+        { title: 'Identify the important gaps', description: 'We work through the risks and options in plain language, with room for your questions.' },
+        { title: 'Make an informed decision', description: 'You receive a practical next step based on what suits your needs and circumstances.' },
+      ]}
+    />
+
+    <WhyChooseUs
+      heading="What you can expect"
+      points={[
+        { title: 'Context before products', description: 'Recommendations begin with your life and priorities, not a generic checklist.' },
+        { title: 'Plain explanations', description: 'Key terms, trade-offs and limitations are explained so you can decide with confidence.' },
+        { title: 'A plan that can change', description: 'Your protection can be reviewed as your income, family and commitments evolve.' },
+      ]}
+    />
+
+    <RelatedArticles category={service.articleCategory as 'financial-protection'} />
+
+    <FAQSection
+      heading="Common questions"
+      faqs={[
+        { question: 'How do I know how much protection I need?', answer: '[Placeholder — explain the factors used to review income, debts, dependants and existing cover.]' },
+        { question: 'Can you review policies I already have?', answer: '[Placeholder — confirm which existing policy documents can be reviewed and what the review includes.]' },
+        { question: 'Do I have to make a decision during the first consultation?', answer: 'No. The first conversation is for understanding your situation and clarifying your options. You can take time to consider the next step.' },
+      ]}
+    />
+
+    <ServiceCTA
+      heading="Ready to make your protection clearer?"
+      description="Talk through what you have in place, what matters most and where a practical next step could begin."
+    />
+  </div>
+</BaseLayout>

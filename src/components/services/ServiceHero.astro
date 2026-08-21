@@ -1,0 +1,66 @@
+---
+interface Props {
+  eyebrow: string;
+  iconPath: string;
+  title: string;
+  lede: string;
+}
+const { eyebrow, iconPath, title, lede } = Astro.props;
+---
+
+<section class="service-hero">
+  <p class="eyebrow">
+    <span class="seal-sm" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d={iconPath} /></svg>
+    </span>
+    {eyebrow}
+  </p>
+  <h1>{title}</h1>
+  <p class="lede">{lede}</p>
+  <div class="row">
+    <a class="btn btn-primary" href="/consultation">Book a consultation</a>
+    <a class="btn btn-secondary" href="/enquiry">Make an enquiry</a>
+  </div>
+</section>
+
+<style>
+  .service-hero { padding: 1.75rem 0 clamp(2rem, 5vw, 3rem); }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin: 0 0 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .seal-sm {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1.5px solid var(--brass);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--white);
+  }
+  .seal-sm svg { width: 13px; height: 13px; stroke: var(--brass-dark); }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2rem, 4.4vw, 3rem);
+    line-height: 1.12;
+    margin: 0 0 1rem;
+    max-width: 18ch;
+  }
+  .lede {
+    font-size: clamp(1.02rem, 1.4vw, 1.15rem);
+    color: var(--ink-soft);
+    max-width: 42rem;
+    margin: 0 0 1.75rem;
+  }
+  .row { display: flex; gap: 0.9rem; flex-wrap: wrap; }
+</style>

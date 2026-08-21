@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import CTA from '../components/CTA.astro';
+import { site, services } from '../config/site';
+---
+
+<BaseLayout title={site.name} description={site.description}>
+  <div class="home-main">
+    <section class="hero">
+      <p class="eyebrow">Words &middot; Protection &middot; Legacy</p>
+      <h1>A steady hand for the things worth getting right.</h1>
+      <p>
+        {site.name} helps individuals and families in Malaysia with clear translation and writing,
+        sound financial protection, and thoughtful pusaka planning — choose where to start below.
+      </p>
+    </section>
+
+    <section class="service-grid" aria-label="Our services">
+      <ServiceCard
+        href={`/services/${services.translation.slug}`}
+        title={services.translation.label}
+        icon="translation"
+        description="Documents, correspondence and content carried accurately between Bahasa Melayu and English — written to be read, not just translated."
+      />
+      <ServiceCard
+        href={`/services/${services.protection.slug}`}
+        title={services.protection.label}
+        icon="protection"
+        description="Coverage built around your actual circumstances — so a single bad year doesn't undo everything you've worked for."
+      />
+      <ServiceCard
+        href={`/services/${services.pusaka.slug}`}
+        title={services.pusaka.label}
+        icon="pusaka"
+        description="Clear, practical guidance for organising inheritance and estate matters — so your family isn't left untangling decisions later."
+      />
+    </section>
+
+    <CTA />
+  </div>
+</BaseLayout>
+
+<style>
+  .home-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100vh - 160px); /* roughly fills one viewport minus header/footer, per the single-viewport requirement */
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.25rem, 4vw, 3rem);
+    width: 100%;
+  }
+  .hero {
+    text-align: center;
+    max-width: 44rem;
+    margin: 0 auto clamp(2rem, 4vh, 3rem);
+  }
+  .hero .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin: 0 0 0.9rem;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.9rem, 3.6vw, 2.75rem);
+    line-height: 1.15;
+    margin: 0 0 0.9rem;
+    color: var(--ink);
+  }
+  .hero p {
+    font-size: clamp(1rem, 1.3vw, 1.1rem);
+    color: var(--ink-soft);
+    line-height: 1.6;
+    margin: 0;
+  }
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1rem, 2vw, 1.5rem);
+    margin-bottom: clamp(2rem, 4vh, 2.75rem);
+  }
+
+  @media (max-width: 900px) {
+    .service-grid { grid-template-columns: 1fr; }
+    .home-main { justify-content: flex-start; min-height: auto; }
+  }
+</style>

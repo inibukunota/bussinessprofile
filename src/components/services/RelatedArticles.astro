@@ -1,0 +1,68 @@
+---
+// Pulls the latest N articles for a given category from the content
+// collection. Used on service pages (heading: "From the articles") and
+// reused on article pages themselves (heading: "Keep reading") to show
+// other posts in the same category, excluding the current one.
+import { getCollection } from 'astro:content';
+import ArticleCard from '../ArticleCard.astro';
+import { shortId } from '../../content/utils';
+
+interface Props {
+  category: 'translation' | 'financial-protection' | 'pusaka';
+  kicker?: string;
+  heading?: string;
+  excludeSlug?: string;
+  limit?: number;
+  showViewAll?: boolean;
+}
+const {
+  category,
+  kicker = 'From the articles',
+  heading = 'Related reading',
+  excludeSlug,
+  limit = 3,
+  showViewAll = true,
+} = Astro.props;
+
+const allArticles = await getCollection('articles', (entry) => entry.data.category === category);
+const articles = allArticles
+  .filter((entry) => shortId(entry) !== excludeSlug)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, limit);
+---
+
+{articles.length > 0 && (
+  <section class="related-articles" aria-labelledby="related-h">
+    <div class="section-head">
+      <p class="kicker">{kicker}</p>
+      <h2 id="related-h">{heading}</h2>
+    </div>
+    <div class="article-grid">
+      {articles.map((article) => (
+        <ArticleCard
+          href={`/articles/${category}/${shortId(article)}`}
+          title={article.data.title}
+          description={article.data.description}
+          date={article.data.date}
+        />
+      ))}
+    </div>
+    {showViewAll && (
+      <p class="view-all"><a href={`/articles/${category}`}>View all {category.replace('-', ' ')} articles &rarr;</a></p>
+    )}
+  </section>
+)}
+
+<style>
+  .related-articles { padding: clamp(2.5rem, 6vw, 4rem) 0; border-top: 1px solid var(--line); }
+  .kicker { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); margin: 0 0 0.5rem; }
+  h2 { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.4rem, 2.4vw, 1.7rem); margin: 0; }
+  .article-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+  .view-all { margin-top: 1.5rem; text-align: center; }
+  .view-all a { font-family: var(--font-mono); font-size: 0.85rem; color: var(--sage); text-decoration: none; }
+  .view-all a:hover { color: var(--ink); }
+
+  @media (max-width: 900px) {
+    .article-grid { grid-template-columns: 1fr; }
+  }
+</style>

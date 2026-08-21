@@ -1,0 +1,35 @@
+---
+interface Props { heading: string; description: string }
+const { heading, description } = Astro.props;
+---
+
+<section class="service-cta" aria-labelledby="cta-h">
+  <h2 id="cta-h">{heading}</h2>
+  <p>{description}</p>
+  <div class="row">
+    <a class="btn btn-primary" href="/consultation">Book a consultation</a>
+    <a class="btn btn-secondary" href="/enquiry">Make an enquiry</a>
+  </div>
+</section>
+
+<style>
+  .service-cta {
+    background: var(--ink);
+    color: var(--white);
+    border-radius: var(--radius);
+    padding: clamp(2rem, 5vw, 3rem);
+    text-align: center;
+    margin: clamp(2.5rem, 6vw, 4rem) 0;
+  }
+  h2 { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.4rem, 2.6vw, 1.9rem); margin: 0 0 0.6rem; }
+  p { margin: 0 0 1.5rem; color: #c9d2dc; max-width: 38rem; margin-left: auto; margin-right: auto; }
+  .row { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
+  .service-cta :global(.btn-primary) { background: var(--brass); border-color: var(--brass); }
+  .service-cta :global(.btn-primary:hover) { background: var(--brass-dark); border-color: var(--brass-dark); }
+  .service-cta :global(.btn-secondary) { border-color: #5a6b7d; color: var(--white); }
+  .service-cta :global(.btn-secondary:hover) { background: rgba(255, 255, 255, 0.08); border-color: var(--white); }
+
+  @media (max-width: 560px) {
+    .row { flex-direction: column; }
+  }
+</style>

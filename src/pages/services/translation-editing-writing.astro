@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceHero from '../../components/services/ServiceHero.astro';
+import ProblemSection from '../../components/services/ProblemSection.astro';
+import ServiceFeatures from '../../components/services/ServiceFeatures.astro';
+import ProcessSection from '../../components/services/ProcessSection.astro';
+import WhyChooseUs from '../../components/services/WhyChooseUs.astro';
+import RelatedArticles from '../../components/services/RelatedArticles.astro';
+import FAQSection from '../../components/services/FAQSection.astro';
+import ServiceCTA from '../../components/services/ServiceCTA.astro';
+import { site, services } from '../../config/site';
+
+const service = services.translation;
+---
+
+<BaseLayout
+  title={service.label}
+  description="Accurate, natural-reading translation, editing and writing between Bahasa Melayu and English — for documents, correspondence and content that need to be trusted."
+>
+  <div class="wrap">
+    <p class="breadcrumb"><a href="/">Home</a> / {service.label}</p>
+
+    <ServiceHero
+      eyebrow={service.label}
+      iconPath="M4 19h16M6 15l4-9 4 9M7.5 12h5"
+      title="Words that carry the same weight in both languages."
+      lede={`From legal and business documents to personal correspondence and published content, ${site.name} translates and writes between Bahasa Melayu and English so meaning, tone and accuracy all survive the crossing.`}
+    />
+
+    <ProblemSection
+      heading="Machine translation gets you close. Close isn't good enough for documents that matter."
+      paragraphs={[
+        "A contract, a certificate, or a client-facing article that reads awkwardly — or worse, ambiguously — creates real problems: rejected submissions, confused readers, or a professional impression you didn't intend to give.",
+        "Good translation isn't word-for-word substitution. It's understanding what the source actually means, then writing that meaning naturally in the target language.",
+      ]}
+      points={[
+        { text: 'Documents rejected for unclear or inaccurate translation' },
+        { text: 'Tone that reads stiff, robotic, or culturally off' },
+        { text: "No second pair of eyes before something goes out" },
+      ]}
+    />
+
+    <ServiceFeatures
+      heading="Three ways to get the words right"
+      intro="Pick one service or combine them — a translated document, for instance, often benefits from an editing pass afterward."
+      offers={[
+        {
+          title: 'Translation',
+          description: 'Bahasa Melayu ↔ English, for legal, business, academic and personal documents.',
+          iconPath: 'M5 8h14M5 8a2 2 0 0 1-2-2V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v1a2 2 0 0 1-2 2M7 8v13M17 8v13M7 21h10',
+        },
+        {
+          title: 'Editing',
+          description: "A thorough pass for clarity, grammar and consistency on writing you've already drafted.",
+          iconPath: 'M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z',
+        },
+        {
+          title: 'Writing',
+          description: 'Original content — articles, profiles, correspondence — written to brief in either language.',
+          iconPath: 'M4 19.5V5a2 2 0 0 1 2-2h13.5v15H6a2 2 0 0 0-2 2zM19.5 18H6a2 2 0 0 0-2 2',
+        },
+      ]}
+      whoForHeading="Who this is for"
+      whoFor={[
+        'Individuals needing certified or personal documents translated',
+        'Small businesses producing bilingual content or correspondence',
+        'Anyone with a draft that needs a second, more careful pair of eyes',
+      ]}
+    />
+
+    <ProcessSection
+      heading="A straightforward process, start to finish"
+      steps={[
+        { title: 'Share the document', description: 'Send what needs translating, editing or writing, along with any context or deadline.' },
+        { title: 'Get a clear scope', description: "You'll receive a straightforward estimate of turnaround and cost before any work begins." },
+        { title: 'Review and finalise', description: 'You receive the finished work, with a chance to request adjustments before it\u2019s final.' },
+      ]}
+    />
+
+    <WhyChooseUs
+      heading="What you can expect"
+      points={[
+        { title: 'Meaning first', description: 'Every translation is checked against the source for meaning, not just wording.' },
+        { title: 'Plain communication', description: 'Clear scope and timelines up front — no surprises partway through.' },
+        { title: 'Confidentiality', description: 'Personal and business documents are handled discreetly, start to finish.' },
+      ]}
+    />
+
+    <RelatedArticles category={service.articleCategory as 'translation'} />
+
+    <FAQSection
+      heading="Common questions"
+      faqs={[
+        { question: 'How long does a translation take?', answer: '[Placeholder — turnaround depends on document length and complexity; state your typical range here.]' },
+        { question: 'Do you provide certified translations?', answer: '[Placeholder — confirm which document types you certify and any related process.]' },
+        { question: 'Can you handle both translation and editing on the same document?', answer: '[Placeholder — describe how combined requests are scoped and priced.]' },
+      ]}
+    />
+
+    <ServiceCTA
+      heading="Ready to get your words right?"
+      description="Send over what you need translated, edited or written, and get a clear scope back before anything begins."
+    />
+  </div>
+</BaseLayout>

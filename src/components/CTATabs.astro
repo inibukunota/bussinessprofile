@@ -1,0 +1,105 @@
+---
+// Tab switcher shell for the consultation/enquiry CTA page. Renders both
+// panels (passed in via slots) and a tab-list; JS below handles switching
+// and syncs the active tab to the URL hash (#book / #enquire) so links
+// elsewhere on the site can deep-link straight into a tab.
+interface Props { initialTab?: 'book' | 'enquire' }
+const { initialTab = 'book' } = Astro.props;
+---
+
+<section class="cta-tabs">
+  <div class="tab-list" role="tablist" aria-label="Contact method">
+    <button
+      class="tab-btn"
+      id="tab-book"
+      role="tab"
+      aria-selected={initialTab === 'book' ? 'true' : 'false'}
+      aria-controls="panel-book"
+      data-tab="book"
+      tabindex={initialTab === 'book' ? 0 : -1}
+    >
+      Book a consultation
+    </button>
+    <button
+      class="tab-btn"
+      id="tab-enquire"
+      role="tab"
+      aria-selected={initialTab === 'enquire' ? 'true' : 'false'}
+      aria-controls="panel-enquire"
+      data-tab="enquire"
+      tabindex={initialTab === 'enquire' ? 0 : -1}
+    >
+      Make an enquiry
+    </button>
+  </div>
+
+  <slot name="book" />
+  <slot name="enquire" />
+</section>
+
+<style>
+  .cta-tabs { padding-bottom: 3.5rem; }
+  .tab-list { display: flex; gap: 0.5rem; border-bottom: 1px solid var(--line); margin-bottom: 2rem; }
+  .tab-btn {
+    appearance: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.98rem;
+    color: var(--ink-soft);
+    padding: 0.85rem 1.1rem;
+    margin-bottom: -1px;
+    border-bottom: 2px solid transparent;
+    transition: color var(--transition), border-color var(--transition);
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn[aria-selected='true'] { color: var(--ink); border-bottom-color: var(--brass); }
+
+  @media (max-width: 620px) {
+    .tab-list { gap: 0; }
+    .tab-btn { flex: 1; text-align: center; padding: 0.85rem 0.5rem; }
+  }
+</style>
+
+<script>
+  function initCTATabs() {
+    const tabs = document.querySelectorAll('.tab-btn');
+    if (!tabs.length || tabs[0].dataset.initialised) return;
+    tabs.forEach((t) => (t.dataset.initialised = 'true'));
+
+    const panels = {
+      book: document.getElementById('panel-book'),
+      enquire: document.getElementById('panel-enquire'),
+    };
+
+    function activate(name) {
+      tabs.forEach((btn) => {
+        const isActive = btn.dataset.tab === name;
+        btn.setAttribute('aria-selected', String(isActive));
+        btn.tabIndex = isActive ? 0 : -1;
+      });
+      Object.keys(panels).forEach((key) => {
+        const panel = panels[key];
+        if (!panel) return;
+        const isActive = key === name;
+        panel.classList.toggle('is-active', isActive);
+        panel.hidden = !isActive;
+      });
+    }
+
+    tabs.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        activate(btn.dataset.tab);
+        history.replaceState(null, '', '#' + btn.dataset.tab);
+      });
+    });
+
+    const startTab = window.location.hash.replace('#', '');
+    if (startTab === 'book' || startTab === 'enquire') activate(startTab);
+  }
+
+  initCTATabs();
+  document.addEventListener('astro:page-load', initCTATabs);
+</script>

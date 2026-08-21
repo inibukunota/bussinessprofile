@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceHero from '../../components/services/ServiceHero.astro';
+import ProblemSection from '../../components/services/ProblemSection.astro';
+import ServiceFeatures from '../../components/services/ServiceFeatures.astro';
+import ProcessSection from '../../components/services/ProcessSection.astro';
+import WhyChooseUs from '../../components/services/WhyChooseUs.astro';
+import RelatedArticles from '../../components/services/RelatedArticles.astro';
+import FAQSection from '../../components/services/FAQSection.astro';
+import ServiceCTA from '../../components/services/ServiceCTA.astro';
+import { site, services } from '../../config/site';
+
+const service = services.pusaka;
+---
+
+<BaseLayout
+  title={service.label}
+  description="Thoughtful pusaka management planning to help families organise inheritance and estate matters with greater clarity."
+>
+  <div class="wrap">
+    <p class="breadcrumb"><a href="/">Home</a> / {service.label}</p>
+
+    <ServiceHero
+      eyebrow={service.label}
+      iconPath="M4 21V9l8-5 8 5v12M4 21h16M9 21v-6h6v6"
+      title="Make the difficult conversations easier for the people you love."
+      lede={`Pusaka planning is about more than assets. ${site.name} helps individuals and families organise important information and decisions so the path forward is clearer when it is needed.`}
+    />
+
+    <ProblemSection
+      heading="Unplanned estates leave families with questions at the hardest time."
+      paragraphs={[
+        "When documents, account details and intentions are scattered or unclear, families can be left trying to piece together what matters while also dealing with loss. Delays and misunderstandings can add avoidable strain.",
+        "A thoughtful plan brings the important details into one place, surfaces decisions that still need attention, and gives the people you trust a clearer starting point.",
+      ]}
+      points={[
+        { text: 'Important documents and account information difficult to locate' },
+        { text: 'Unclear intentions creating disagreement or delays among family members' },
+        { text: 'No practical record to guide the people responsible for next steps' },
+      ]}
+    />
+
+    <ServiceFeatures
+      heading="A clearer way to organise what comes next"
+      intro="Work through the practical pieces of your estate and leave a more useful record for the people who may need it."
+      offers={[
+        {
+          title: 'Pusaka inventory',
+          description: 'Bring together a structured record of assets, documents, accounts and important contacts.',
+          iconPath: 'M4 4h16v16H4zM8 8h8M8 12h8M8 16h5',
+        },
+        {
+          title: 'Family planning',
+          description: 'Identify responsibilities, questions and conversations that deserve attention before they become urgent.',
+          iconPath: 'M16 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 20v-2a4 4 0 0 0-3-3.9M16 2.1a4 4 0 0 1 0 7.8',
+        },
+        {
+          title: 'Review and maintain',
+          description: 'Keep the plan useful as assets, family circumstances and your intentions change over time.',
+          iconPath: 'M20 11a8.1 8.1 0 0 0-15.5-2M4 5v4h4M4 13a8.1 8.1 0 0 0 15.5 2M20 19v-4h-4',
+        },
+      ]}
+      whoForHeading="Who this is for"
+      whoFor={[
+        'Individuals who want their estate information organised in one clear place',
+        'Parents and families who want to reduce uncertainty for those left behind',
+        'Anyone whose assets, family circumstances or intentions have recently changed',
+      ]}
+    />
+
+    <ProcessSection
+      heading="A practical process, at your pace"
+      steps={[
+        { title: 'Map what matters', description: 'Begin with your family context, assets, documents and the questions you already have.' },
+        { title: 'Organise the details', description: 'Create a clearer record and identify gaps, decisions or professional advice still needed.' },
+        { title: 'Keep it current', description: 'Leave a maintainable plan and review it when circumstances or intentions change.' },
+      ]}
+    />
+
+    <WhyChooseUs
+      heading="What you can expect"
+      points={[
+        { title: 'Practical organisation', description: 'Important information is arranged so it is easier to understand, update and find.' },
+        { title: 'Sensitive conversations', description: 'Family circumstances and personal intentions are handled with care and discretion.' },
+        { title: 'Clarity about next steps', description: 'You can see what is ready, what needs attention and when specialist advice may be appropriate.' },
+      ]}
+    />
+
+    <RelatedArticles category={service.articleCategory as 'pusaka'} />
+
+    <FAQSection
+      heading="Common questions"
+      faqs={[
+        { question: 'What does pusaka management planning include?', answer: '[Placeholder — describe the documents, asset records, family discussions and planning support included in your service.]' },
+        { question: 'Is this the same as writing a will?', answer: '[Placeholder — explain how this planning service relates to wills, nominations, trusts and other specialist arrangements.]' },
+        { question: 'When should I start organising my pusaka information?', answer: 'There is no need to wait for a major life event. Starting with the information you already have can make future decisions much easier.' },
+      ]}
+    />
+
+    <ServiceCTA
+      heading="Ready to make things clearer for your family?"
+      description="Start a thoughtful conversation about organising your pusaka information and the next steps that matter to you."
+    />
+  </div>
+</BaseLayout>

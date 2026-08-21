@@ -1,0 +1,92 @@
+---
+// Shared site header. `currentPath` lets nav links mark themselves
+// aria-current when active — pass Astro.url.pathname from the page.
+import { site, services } from '../config/site';
+
+interface Props {
+  currentPath?: string;
+}
+const { currentPath = '' } = Astro.props;
+
+const navLinks = Object.values(services).map((s) => ({
+  href: `/services/${s.slug}`,
+  label: s.shortLabel,
+}));
+navLinks.push({ href: '/articles', label: 'Articles' });
+navLinks.push({ href: '/about', label: 'About Us' });
+---
+
+<header class="site-header">
+  <a class="brand" href="/">
+    <span class="brand-mark" aria-hidden="true">{site.name.split(' ').map((w) => w[0]).slice(0, 2).join('')}</span>
+    {site.name}
+  </a>
+  <nav aria-label="Primary">
+    <span class="nav-links">
+      {navLinks.map((link) => (
+        <a href={link.href} aria-current={currentPath.startsWith(link.href) ? 'page' : undefined}>
+          {link.label}
+        </a>
+      ))}
+    </span>
+    <a class="nav-cta" href="/consultation">Book a consultation</a>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem clamp(1.25rem, 4vw, 3rem);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.15rem;
+    text-decoration: none;
+  }
+  .brand-mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1.5px solid var(--brass);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--brass-dark);
+    flex-shrink: 0;
+  }
+  .site-header nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2.5vw, 2rem);
+    font-size: 0.95rem;
+  }
+  .nav-links { display: flex; gap: inherit; }
+  .site-header nav a { text-decoration: none; color: var(--ink-soft); }
+  .site-header nav a:hover,
+  .site-header nav a[aria-current='page'] { color: var(--ink); }
+  .site-header nav a[aria-current='page'] { border-bottom: 2px solid var(--brass); padding-bottom: 2px; }
+  .nav-cta {
+    border: 1px solid var(--ink);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    color: var(--ink) !important;
+    transition: background var(--transition), color var(--transition);
+  }
+  .nav-cta:hover { background: var(--ink); color: var(--white) !important; }
+
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+  }
+  @media (max-width: 560px) {
+    .site-header { flex-wrap: wrap; gap: 0.75rem; }
+  }
+</style>

@@ -1,0 +1,195 @@
+---
+import { site, services } from '../config/site';
+interface Props { id?: string; hidden?: boolean; labelledby?: string }
+const { id = 'panel-enquire', hidden = true, labelledby = 'tab-enquire' } = Astro.props;
+---
+
+<div class="tab-panel" class:list={[{ 'is-active': !hidden }]} id={id} role="tabpanel" aria-labelledby={labelledby} hidden={hidden}>
+  <p class="enquiry-intro">Prefer to write it out? Tell us a bit about what you need and we'll get back to you by email.</p>
+
+  <form id="enquiry-form" data-endpoint={site.enquiryEndpoint} novalidate>
+    <div class="form-grid">
+      <div class="form-row-2">
+        <div class="field" data-field="name">
+          <label for="ef-name">Name <span class="req">*</span></label>
+          <input type="text" id="ef-name" name="name" autocomplete="name" required />
+          <p class="field-error">Please enter your name.</p>
+        </div>
+        <div class="field" data-field="email">
+          <label for="ef-email">Email <span class="req">*</span></label>
+          <input type="email" id="ef-email" name="email" autocomplete="email" required />
+          <p class="field-error">Please enter a valid email address.</p>
+        </div>
+      </div>
+
+      <div class="form-row-2">
+        <div class="field" data-field="phone">
+          <label for="ef-phone">Phone / WhatsApp</label>
+          <input type="tel" id="ef-phone" name="phone" autocomplete="tel" />
+        </div>
+        <div class="field" data-field="service">
+          <label for="ef-service">Service you're interested in <span class="req">*</span></label>
+          <select id="ef-service" name="service" required>
+            <option value="" disabled selected>Select one</option>
+            {Object.values(services).map((s) => <option value={s.articleCategory}>{s.label}</option>)}
+            <option value="other">Not sure / Other</option>
+          </select>
+          <p class="field-error">Please select a service.</p>
+        </div>
+      </div>
+
+      <div class="field" data-field="message">
+        <label for="ef-message">Tell us a bit about what you need <span class="req">*</span></label>
+        <textarea id="ef-message" name="message" required></textarea>
+        <p class="field-error">Please add a short message so we know how to help.</p>
+      </div>
+
+      <div class="form-footer">
+        <button class="btn" type="submit" id="ef-submit">
+          <span id="ef-submit-label">Send enquiry</span>
+        </button>
+        <p class="form-privacy">Sent directly to {site.name} — not shared with anyone else.</p>
+      </div>
+
+      <div class="form-status success" id="ef-status-success" role="status">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4L12 14.01l-3-3" /></svg>
+        <span>Thanks — your enquiry has been sent. We'll be in touch by email shortly.</span>
+      </div>
+      <div class="form-status error" id="ef-status-error" role="alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" /></svg>
+        <span>Something went wrong sending your enquiry. Please try again, or email us directly at {site.email}.</span>
+      </div>
+    </div>
+  </form>
+</div>
+
+<style>
+  .tab-panel { display: none; }
+  .tab-panel.is-active { display: block; }
+  .enquiry-intro { margin: 0 0 1.5rem; color: var(--ink-soft); }
+  .form-grid { display: grid; gap: 1.15rem; }
+  .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.15rem; }
+  label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem; }
+  label .req { color: var(--brass-dark); font-weight: 400; }
+  input, select, textarea {
+    width: 100%;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--ink);
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 0.75rem 0.9rem;
+  }
+  textarea { resize: vertical; min-height: 120px; }
+  .field-error { font-size: 0.78rem; color: var(--error); margin-top: 0.35rem; display: none; }
+  .has-error input, .has-error select, .has-error textarea { border-color: var(--error); }
+  .has-error .field-error { display: block; }
+
+  .form-footer { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem; }
+  .btn {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.85rem 1.75rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--white);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background var(--transition), border-color var(--transition), opacity var(--transition);
+  }
+  .btn:hover { background: var(--brass-dark); border-color: var(--brass-dark); }
+  .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  .form-privacy { font-size: 0.78rem; color: var(--ink-soft); margin: 0; }
+
+  .form-status {
+    display: none;
+    align-items: flex-start;
+    gap: 0.6rem;
+    border-radius: var(--radius);
+    padding: 0.9rem 1.1rem;
+    font-size: 0.88rem;
+    margin-top: 1.25rem;
+  }
+  .form-status.is-visible { display: flex; }
+  .form-status.success { background: var(--sage-tint); border: 1px solid var(--sage); color: var(--ink); }
+  .form-status.error { background: #f7e9e5; border: 1px solid var(--error); color: var(--ink); }
+  .form-status svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 0.1rem; }
+
+  @media (max-width: 620px) {
+    .form-row-2 { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  // EnquiryForm behaviour: validate, then POST to the Google Apps Script
+  // Web App URL read from the form's data-endpoint attribute (set from
+  // site config server-side — no secret lives in this script).
+  function initEnquiryForm() {
+    const form = document.getElementById('enquiry-form');
+    if (!form || form.dataset.initialised) return;
+    form.dataset.initialised = 'true';
+
+    const endpoint = form.getAttribute('data-endpoint') || '';
+    const submitBtn = document.getElementById('ef-submit');
+    const submitLabel = document.getElementById('ef-submit-label');
+    const statusSuccess = document.getElementById('ef-status-success');
+    const statusError = document.getElementById('ef-status-error');
+
+    function setFieldError(fieldEl, hasError) {
+      fieldEl.classList.toggle('has-error', hasError);
+    }
+
+    function validate() {
+      let valid = true;
+      form.querySelectorAll('.field').forEach((fieldEl) => {
+        const input = fieldEl.querySelector('input, select, textarea');
+        if (!input || !input.required) return;
+        const ok = input.type === 'email'
+          ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim())
+          : input.value.trim().length > 0;
+        setFieldError(fieldEl, !ok);
+        if (!ok) valid = false;
+      });
+      return valid;
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      statusSuccess.classList.remove('is-visible');
+      statusError.classList.remove('is-visible');
+
+      if (!validate()) return;
+
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      submitBtn.disabled = true;
+      submitLabel.textContent = 'Sending…';
+
+      fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // avoids a CORS preflight to Apps Script
+        body: JSON.stringify(data),
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error('Request failed');
+          form.reset();
+          statusSuccess.classList.add('is-visible');
+        })
+        .catch(() => {
+          statusError.classList.add('is-visible');
+        })
+        .finally(() => {
+          submitBtn.disabled = false;
+          submitLabel.textContent = 'Send enquiry';
+        });
+    });
+  }
+
+  initEnquiryForm();
+  document.addEventListener('astro:page-load', initEnquiryForm);
+</script>

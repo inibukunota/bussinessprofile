@@ -1,0 +1,87 @@
+---
+interface Offer { title: string; description: string; iconPath: string }
+interface Props {
+  heading: string;
+  intro: string;
+  offers: Offer[];
+  whoForHeading: string;
+  whoFor: string[];
+}
+const { heading, intro, offers, whoForHeading, whoFor } = Astro.props;
+---
+
+<section class="offer" aria-labelledby="offer-h">
+  <div class="section-head">
+    <p class="kicker">What we offer</p>
+    <h2 id="offer-h">{heading}</h2>
+    <p>{intro}</p>
+  </div>
+  <div class="offer-grid">
+    {offers.map((offer) => (
+      <div class="offer-card">
+        <span class="seal" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d={offer.iconPath} /></svg>
+        </span>
+        <h3>{offer.title}</h3>
+        <p>{offer.description}</p>
+      </div>
+    ))}
+  </div>
+
+  <div class="who-for">
+    <h3>{whoForHeading}</h3>
+    <ul>
+      {whoFor.map((item) => <li>{item}</li>)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .offer { padding: clamp(2.5rem, 6vw, 4rem) 0; border-top: 1px solid var(--line); }
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin: 0 0 0.5rem;
+  }
+  h2 { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.5rem, 2.6vw, 1.9rem); margin: 0 0 0.6rem; line-height: 1.2; }
+  .offer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .offer-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .offer-card .seal {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid var(--brass);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--white);
+  }
+  .offer-card .seal svg { width: 20px; height: 20px; stroke: var(--brass-dark); }
+  .offer-card h3 { font-family: var(--font-display); font-size: 1.05rem; margin: 0; font-weight: 600; }
+  .offer-card p { margin: 0; font-size: 0.9rem; color: var(--ink-soft); }
+
+  .who-for {
+    margin-top: 2.25rem;
+    background: var(--sage-tint);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.75rem;
+  }
+  .who-for h3 { font-family: var(--font-display); font-weight: 600; margin: 0 0 0.75rem; font-size: 1.1rem; }
+  .who-for ul { margin: 0; padding-left: 1.15rem; color: var(--ink-soft); font-size: 0.92rem; display: grid; gap: 0.4rem; }
+
+  @media (max-width: 900px) {
+    .offer-grid { grid-template-columns: 1fr; }
+  }
+</style>

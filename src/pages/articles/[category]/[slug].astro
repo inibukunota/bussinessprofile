@@ -1,0 +1,176 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import RelatedArticles from '../../../components/services/RelatedArticles.astro';
+import { services } from '../../../config/site';
+import { shortId } from '../../../content/utils';
+
+export async function getStaticPaths() {
+  const allArticles = await getCollection('articles');
+  return allArticles.map((article) => ({
+    params: { category: article.data.category, slug: shortId(article) },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { category } = Astro.params;
+// `entry.render()` was removed in Astro 6 — rendering now goes through the
+// standalone `render()` helper imported from `astro:content`.
+const { Content } = await render(article);
+
+const service = Object.values(services).find((s) => s.articleCategory === category);
+const formattedDate = article.data.date.toLocaleDateString('en-MY', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<BaseLayout title={article.data.title} description={article.data.description}>
+  <div class="wrap-narrow">
+    <p class="breadcrumb">
+      <a href="/">Home</a> /
+      {service && <a href={`/articles/${category}`}>{service.shortLabel} articles</a>} /
+      {article.data.title}
+    </p>
+
+    <header class="article-header">
+      <span class="category-tag">{service?.shortLabel ?? category}</span>
+      <h1>{article.data.title}</h1>
+      <p class="dek">{article.data.description}</p>
+      <div class="article-meta">
+        <span>{formattedDate}</span>
+        <span>&middot;</span>
+        <span>By {article.data.author}</span>
+      </div>
+    </header>
+
+    <article class="article-body">
+      <Content />
+    </article>
+
+    <div class="share-row">
+      {service && (
+        <a class="back-link" href={`/articles/${category}`}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>
+          Back to {service.shortLabel.toLowerCase()} articles
+        </a>
+      )}
+      {article.data.tags.length > 0 && (
+        <div class="tag-list">
+          {article.data.tags.map((tag: string) => <span class="tag-pill">{tag}</span>)}
+        </div>
+      )}
+    </div>
+
+    {service && (
+      <div class="service-plug">
+        <div class="text">
+          <h3>Have something you'd like help with?</h3>
+          <p>Get in touch and hear back with a clear scope before anything begins.</p>
+        </div>
+        <a class="btn btn-primary" href={`/services/${service.slug}`}>View {service.shortLabel.toLowerCase()} service</a>
+      </div>
+    )}
+  </div>
+
+  <RelatedArticles
+    category={article.data.category}
+    excludeSlug={shortId(article)}
+    limit={2}
+    kicker="Keep reading"
+    heading={`More on ${service?.shortLabel.toLowerCase() ?? category}`}
+    showViewAll={false}
+  />
+</BaseLayout>
+
+<style>
+  .article-header { padding: 1.75rem 0 2rem; }
+  .category-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--sage);
+    background: var(--sage-tint);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.35rem 0.8rem;
+    margin-bottom: 1rem;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.15;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    margin: 0 0 1rem;
+  }
+  .dek { font-size: 1.05rem; color: var(--ink-soft); margin: 0 0 1.5rem; max-width: 40rem; }
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 0.9rem 0;
+  }
+
+  .article-body { padding: 1rem 0 2.5rem; }
+  .article-body :global(h2) {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    margin: 2rem 0 0.85rem;
+  }
+  .article-body :global(h2:first-child) { margin-top: 0; }
+  .article-body :global(p) { margin: 0 0 1.1rem; color: var(--ink); }
+  .article-body :global(ul),
+  .article-body :global(ol) { margin: 0 0 1.1rem; padding-left: 1.3rem; color: var(--ink); display: grid; gap: 0.5rem; }
+  .article-body :global(li)::marker { color: var(--brass-dark); }
+  .article-body :global(blockquote) {
+    margin: 1.5rem 0;
+    padding: 0.25rem 0 0.25rem 1.25rem;
+    border-left: 3px solid var(--brass);
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+  .article-body :global(strong) { color: var(--ink); }
+
+  .share-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--line);
+  }
+  .tag-list { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .tag-pill { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-soft); border: 1px solid var(--line); border-radius: 999px; padding: 0.25rem 0.7rem; }
+  .back-link { font-family: var(--font-mono); font-size: 0.85rem; color: var(--sage); text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; }
+  .back-link:hover { color: var(--ink); }
+  .back-link svg { width: 14px; height: 14px; }
+
+  .service-plug {
+    background: var(--parchment-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 2.5rem 0;
+  }
+  .service-plug .text h3 { font-family: var(--font-display); font-size: 1.1rem; margin: 0 0 0.35rem; font-weight: 600; }
+  .service-plug .text p { margin: 0; color: var(--ink-soft); font-size: 0.9rem; max-width: 32rem; }
+
+  @media (max-width: 560px) {
+    .service-plug { flex-direction: column; align-items: flex-start; }
+  }
+</style>

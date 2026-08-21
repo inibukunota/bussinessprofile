@@ -1,0 +1,64 @@
+---
+interface ProblemPoint { text: string }
+interface Props {
+  heading: string;
+  paragraphs: string[];
+  points: ProblemPoint[];
+}
+const { heading, paragraphs, points } = Astro.props;
+---
+
+<section class="problem" aria-labelledby="problem-h">
+  <div class="problem-grid">
+    <div>
+      <p class="kicker">The problem</p>
+      <h2 id="problem-h">{heading}</h2>
+      {paragraphs.map((p) => <p>{p}</p>)}
+    </div>
+    <ul class="problem-list">
+      {points.map((point) => (
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" /></svg>
+          {point.text}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .problem { padding: clamp(2.5rem, 6vw, 4rem) 0; border-top: 1px solid var(--line); }
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin: 0 0 0.5rem;
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+    margin: 0 0 0.8rem;
+    line-height: 1.2;
+  }
+  .problem-grid p { color: var(--ink-soft); margin: 0 0 1rem; }
+  .problem-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 2.5rem; align-items: start; }
+  .problem-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; }
+  .problem-list li {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+    background: var(--parchment-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 0.85rem 1rem;
+    font-size: 0.92rem;
+  }
+  .problem-list li svg { width: 16px; height: 16px; stroke: var(--brass-dark); flex-shrink: 0; margin-top: 0.15rem; }
+
+  @media (max-width: 900px) {
+    .problem-grid { grid-template-columns: 1fr; }
+  }
+</style>

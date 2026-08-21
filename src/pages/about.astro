@@ -1,0 +1,150 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTA from '../components/CTA.astro';
+import { site } from '../config/site';
+---
+
+<BaseLayout
+  title="About Us"
+  description={`Learn more about ${site.name} and the thoughtful, practical support we provide for words, protection and legacy planning.`}
+>
+  <div class="about-page">
+    <section class="about-hero" aria-labelledby="about-title">
+      <div class="hero-copy">
+        <p class="eyebrow">About us</p>
+        <h1 id="about-title">A thoughtful partner for the decisions that matter.</h1>
+        <p class="lede">
+          {site.name} brings careful thinking, plain communication and personal attention to the
+          practical work that helps individuals and families move forward with confidence.
+        </p>
+      </div>
+
+      <div class="portrait-stage" aria-label="Portrait placeholder for one team member">
+        <div class="portrait-placeholder">
+          <div class="person-shape" aria-hidden="true">
+            <span class="person-head"></span>
+            <span class="person-body"></span>
+          </div>
+          <p>Portrait placeholder</p>
+          <span>One person</span>
+        </div>
+        <span class="stage-label">Your name / role</span>
+      </div>
+    </section>
+
+    <section class="about-detail" aria-labelledby="approach-title">
+      <div class="section-head">
+        <p class="kicker">Our approach</p>
+        <h2 id="approach-title">Clear guidance, carefully delivered.</h2>
+      </div>
+      <div class="detail-grid">
+        <p>
+          Some matters need exact words. Others need a plan that protects what you have built or
+          makes things easier for the people you love. We take the time to understand the context,
+          then help turn complexity into a practical next step.
+        </p>
+        <p>
+          The result is work that feels considered rather than rushed: accurate documents, sensible
+          protection and legacy planning that leaves fewer loose ends behind.
+        </p>
+      </div>
+    </section>
+
+    <CTA />
+  </div>
+</BaseLayout>
+
+<style>
+  .about-page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3rem) clamp(1.25rem, 4vw, 3rem) 0;
+  }
+  .about-hero {
+    min-height: calc(100vh - 112px);
+    display: grid;
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+    align-items: center;
+    gap: clamp(2rem, 6vw, 6rem);
+    padding: clamp(1rem, 4vh, 3rem) 0 clamp(3rem, 8vh, 6rem);
+  }
+  .hero-copy { max-width: 31rem; }
+  .eyebrow,
+  .kicker,
+  .stage-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+  }
+  .eyebrow { margin: 0 0 1rem; }
+  h1,
+  h2 { font-family: var(--font-display); font-weight: 600; line-height: 1.12; }
+  h1 { font-size: clamp(2.3rem, 5vw, 4.5rem); margin: 0 0 1.2rem; }
+  .lede { color: var(--ink-soft); font-size: clamp(1rem, 1.5vw, 1.15rem); margin: 0; }
+  .portrait-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--sage-tint);
+    border: 1px solid var(--line);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .portrait-stage::before {
+    content: '';
+    position: absolute;
+    inset: 12%;
+    border: 1px dashed var(--brass);
+    opacity: 0.7;
+  }
+  .portrait-placeholder { position: relative; text-align: center; color: var(--ink-soft); }
+  .person-shape { height: 9rem; width: 8rem; margin: 0 auto 1rem; position: relative; }
+  .person-head {
+    display: block;
+    width: 4.5rem;
+    height: 4.5rem;
+    margin: auto;
+    border-radius: 50%;
+    background: var(--brass);
+    opacity: 0.75;
+  }
+  .person-body {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0.5rem;
+    width: 7rem;
+    height: 5rem;
+    border-radius: 4rem 4rem 0 0;
+    background: var(--ink-soft);
+    opacity: 0.75;
+  }
+  .portrait-placeholder p { margin: 0; font-family: var(--font-display); font-size: 1.1rem; }
+  .portrait-placeholder span { font-family: var(--font-mono); font-size: 0.7rem; }
+  .stage-label { position: absolute; bottom: 1rem; left: 1rem; }
+  .about-detail {
+    border-top: 1px solid var(--line);
+    padding: clamp(3rem, 7vw, 5rem) 0;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(2rem, 8vw, 8rem);
+  }
+  .section-head { margin: 0; }
+  .section-head .kicker { margin: 0 0 0.6rem; }
+  h2 { font-size: clamp(1.7rem, 3vw, 2.5rem); margin: 0; }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; color: var(--ink-soft); }
+  .detail-grid p { margin: 0; }
+
+  @media (max-width: 760px) {
+    .about-hero { min-height: auto; grid-template-columns: 1fr; gap: 2.5rem; padding-bottom: 3rem; }
+    .portrait-stage { max-width: 42rem; }
+    .about-detail { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
+  @media (max-width: 560px) {
+    .detail-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .person-shape { transform: scale(0.8); margin-bottom: 0; }
+  }
+</style>

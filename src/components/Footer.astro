@@ -1,0 +1,38 @@
+---
+import { site, services } from '../config/site';
+const year = new Date().getFullYear();
+const navLinks = Object.values(services).map((s) => ({
+  href: `/services/${s.slug}`,
+  label: s.shortLabel,
+}));
+navLinks.push({ href: '/articles', label: 'Articles' });
+navLinks.push({ href: '/about', label: 'About Us' });
+---
+
+<footer class="site-footer">
+  <span>&copy; {year} {site.name}. All rights reserved.</span>
+  <nav aria-label="Footer">
+    {navLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+  </nav>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--line);
+    padding: 1.25rem clamp(1.25rem, 4vw, 3rem);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+  .site-footer nav { display: flex; gap: 1.25rem; }
+  .site-footer a { text-decoration: none; }
+  .site-footer a:hover { color: var(--ink); }
+
+  @media (max-width: 560px) {
+    .site-footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>

@@ -1,0 +1,43 @@
+---
+interface FAQ { question: string; answer: string }
+interface Props { heading: string; faqs: FAQ[] }
+const { heading, faqs } = Astro.props;
+---
+
+<section class="faq" aria-labelledby="faq-h">
+  <div class="section-head">
+    <p class="kicker">FAQ</p>
+    <h2 id="faq-h">{heading}</h2>
+  </div>
+  <div class="faq-list">
+    {faqs.map((faq) => (
+      <details class="faq-item">
+        <summary>{faq.question}<span class="chev" aria-hidden="true">&#9662;</span></summary>
+        <p>{faq.answer}</p>
+      </details>
+    ))}
+  </div>
+</section>
+
+<style>
+  .faq { padding: clamp(2.5rem, 6vw, 4rem) 0; border-top: 1px solid var(--line); }
+  .kicker { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); margin: 0 0 0.5rem; }
+  h2 { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.5rem, 2.6vw, 1.9rem); margin: 0; line-height: 1.2; }
+  .faq-list { display: grid; gap: 0.75rem; max-width: 44rem; margin-top: 2rem; }
+  .faq-item { border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); }
+  .faq-item summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary .chev { transition: transform var(--transition); flex-shrink: 0; }
+  .faq-item[open] summary .chev { transform: rotate(180deg); }
+  .faq-item p { margin: 0; padding: 0 1.25rem 1.1rem; color: var(--ink-soft); font-size: 0.9rem; }
+</style>
