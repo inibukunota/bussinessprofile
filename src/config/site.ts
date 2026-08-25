@@ -25,7 +25,7 @@ export const site = {
   // This is a public endpoint URL, not a secret; the Sheet it writes to
   // is protected server-side by the Apps Script project, not by hiding
   // this URL. Never put an API key or credential here.
-  enquiryEndpoint: 'https://script.google.com/macros/s/[DEPLOYMENT_ID]/exec',
+  enquiryEndpoint: 'https://script.google.com/macros/s/AKfycbwdmNOCn5y_45A6TgNiVtUAJ_uYeMB_i2x4oNsmFwVYMrt9Les7MrdSAcKokS1YLyii6A/exec',
 
   // Socials — leave blank ('') to omit from the footer automatically
   socials: {
