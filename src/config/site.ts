@@ -19,7 +19,7 @@ export const site = {
   responseTimeBusinessDays: '[X]',
 
   // Booking — Google Calendar Appointment Scheduling
-  bookingUrl: 'https://calendar.google.com/calendar/appointments/schedules/[BOOKING_SCHEDULE_ID]',
+  bookingUrl: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ3Jvk6YBn3fEOf3r5auF4vEQpypoYIo4XbbSKig8DmsaRkkEx2rMs8MB0XhWayA_1965qWrKYHn',
 
   // Enquiry form — Google Apps Script Web App deployment URL.
   // This is a public endpoint URL, not a secret; the Sheet it writes to
