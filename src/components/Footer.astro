@@ -1,5 +1,9 @@
+---
+import { site } from '../config/site';
+---
+
 <footer class="site-footer">
-<span>&copy; {new Date().getFullYear()} Business Name. All rights reserved.</span>
+<span>&copy; {new Date().getFullYear()} {site.name}. All rights reserved.</span>
 <nav aria-label="Footer"><a href="/articles">Articles</a><a href="/about">About Us</a><a href="/consultation">Consultation</a></nav>
 </footer>
 <style>
