@@ -23,7 +23,13 @@ const service = Object.values(services).find((s) => s.articleCategory === catego
 const formattedDate = article.data.date.toLocaleDateString('en-MY', { year: 'numeric', month: 'short', day: 'numeric' });
 ---
 
-<BaseLayout title={article.data.title} description={article.data.description}>
+<BaseLayout
+  title={article.data.title}
+  description={article.data.description}
+  type="article"
+  publishedTime={article.data.date}
+  author={article.data.author}
+>
   <div class="wrap-narrow">
     <p class="breadcrumb">
       <a href="/">Home</a> /

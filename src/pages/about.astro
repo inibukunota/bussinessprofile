@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import CTA from '../components/CTA.astro';
 import { site } from '../config/site';
 ---
 
@@ -50,7 +49,7 @@ import { site } from '../config/site';
       </div>
     </section>
 
-    <CTA />
+    <section class="about-cta" aria-label="Get in touch"><div class="cta-row"><a class="btn btn-primary" href="/consultation">Book a consultation</a><a class="btn btn-secondary" href="/enquiry">Make an enquiry</a></div><p>Usually respond within {site.responseTimeBusinessDays} business days.</p></section>
   </div>
 </BaseLayout>
 
@@ -125,6 +124,10 @@ import { site } from '../config/site';
   .portrait-placeholder p { margin: 0; font-family: var(--font-display); font-size: 1.1rem; }
   .portrait-placeholder span { font-family: var(--font-mono); font-size: 0.7rem; }
   .stage-label { position: absolute; bottom: 1rem; left: 1rem; }
+  .about-cta { text-align:center; padding:0 0 3rem; }
+  .cta-row { display:flex; align-items:center; justify-content:center; gap:1rem; flex-wrap:wrap; }
+  .about-cta > p { margin:.85rem 0 0; font-size:.82rem; color:var(--ink-soft); }
+
   .about-detail {
     border-top: 1px solid var(--line);
     padding: clamp(3rem, 7vw, 5rem) 0;
