@@ -1,23 +1,32 @@
 ---
 import { site } from '../config/site';
+const currentPath = Astro.url.pathname;
+const navItems = [
+  { href: '/services/translation-editing-writing', label: 'Translation' },
+  { href: '/services/financial-protection', label: 'Protection' },
+  { href: '/services/pusaka-management', label: 'Pusaka' },
+  { href: '/articles', label: 'Articles' },
+  { href: '/about', label: 'About Us' },
+];
 ---
 
 <header class="site-header">
-<a class="brand" href="/"><span class="brand-mark" aria-hidden="true">BN</span><span>{site.name}</span></a>
-<nav aria-label="Primary">
-<a href="/services/translation-editing-writing">Translation</a>
-<a href="/services/financial-protection">Protection</a>
-<a href="/services/pusaka-management">Pusaka</a>
-<a href="/articles">Articles</a><a href="/about">About Us</a>
-<a class="nav-cta" href="/consultation">Book a consultation</a>
-</nav>
+  <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">{site.name.split(' ').map((word) => word[0]).slice(0, 2).join('')}</span><span>{site.name}</span></a>
+  <nav aria-label="Primary">
+    {navItems.map((item) => (
+      <a href={item.href} aria-current={currentPath === item.href || (item.href === '/articles' && currentPath.startsWith('/articles/')) ? 'page' : undefined}>{item.label}</a>
+    ))}
+    <a class="nav-cta" href="/consultation">Book a consultation</a>
+  </nav>
 </header>
 <style>
 .site-header { display:flex; align-items:center; justify-content:space-between; gap:1.5rem; padding:1.25rem clamp(1.25rem,4vw,3rem); border-bottom:1px solid var(--line); }
-.brand { display:flex; align-items:center; gap:.6rem; font-family:var(--font-display); font-size:1.15rem; font-weight:600; text-decoration:none; }
+.brand { display:flex; align-items:center; gap:.6rem; font-family:var(--font-display); font-size:1.15rem; font-weight:600; text-decoration:none; color:var(--ink); }
 .brand-mark { width:30px; height:30px; flex:0 0 auto; display:grid; place-items:center; border:1.5px solid var(--brass); border-radius:50%; color:var(--brass-dark); font-family:var(--font-mono); font-size:.7rem; }
 nav { display:flex; align-items:center; gap:clamp(1rem,2.5vw,2rem); font-size:.95rem; }
-nav a { color:var(--ink-soft); text-decoration:none; } nav a:hover { color:var(--ink); }
+nav a { color:var(--ink-soft); text-decoration:none; }
+nav a:hover { color:var(--ink); }
+nav a[aria-current='page'] { color:var(--ink); border-bottom:2px solid var(--brass); padding-bottom:2px; }
 .nav-cta { padding:.5rem 1rem; border:1px solid var(--ink); border-radius:var(--radius); color:var(--ink); }
 .nav-cta:hover { background:var(--ink); color:var(--white); }
 @media (max-width:900px) { nav a:not(.nav-cta) { display:none; } }
