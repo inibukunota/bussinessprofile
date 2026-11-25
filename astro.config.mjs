@@ -1,7 +1,8 @@
 import { defineConfig } from 'astro/config';
 
-// Replace `site` with the real production domain once it's registered —
-// Astro uses it to generate absolute URLs for canonical tags, sitemaps, etc.
+// Set PUBLIC_SITE_URL in the deployment environment when the production
+// domain is ready. Keeping it unset prevents placeholder canonical/sitemap
+// URLs from being published during development.
 export default defineConfig({
-  site: 'https://example.com',
+  site: process.env.PUBLIC_SITE_URL || undefined,
 });
