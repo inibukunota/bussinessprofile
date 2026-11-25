@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../config/site';
 ---
-<BaseLayout title="Business Name" description="Professional translation, financial protection and pusaka management planning for individuals and families in Malaysia.">
+<BaseLayout title={site.name} description="Professional translation, financial protection and pusaka management planning for individuals and families in Malaysia.">
 <div class="home">
 <section class="hero"><p class="eyebrow">Words · Protection · Legacy</p><h1>A steady hand for the things worth getting right.</h1><p>Clear, thoughtful professional services for individuals and families in Malaysia.</p></section>
 <section class="services" aria-label="Services">
